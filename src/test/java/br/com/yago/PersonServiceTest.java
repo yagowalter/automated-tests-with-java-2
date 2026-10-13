@@ -6,15 +6,18 @@ import br.com.yago.service.PersonService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.aggregator.ArgumentAccessException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonServiceTest {
 
+    IPersonService service;
     Person person;
 
     @BeforeEach
     void setup() {
+        service = new PersonService();
         person = new Person(
                 "Moon",
                 "Keith",
@@ -28,9 +31,6 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_When_Success_ShouldReturnPersonObject() {
 
-        // Given / Arrange
-        IPersonService service = new PersonService();
-
         // When / Act
         Person actual = service.createPerson(person);
 
@@ -42,9 +42,6 @@ public class PersonServiceTest {
     @DisplayName("When Create a Person witch Success should contains Valid Fields in Returned a Person Object")
     @Test
     void testCreatePerson_When_Success_ShouldContainsValidFieldsInReturnedPersonObject() {
-
-        // Given / Arrange
-        IPersonService service = new PersonService();
 
         // When / Act
         Person actual = service.createPerson(person);
@@ -63,14 +60,16 @@ public class PersonServiceTest {
     void testCreatePerson_WhitNullEmail_ShouldThrowIllegalArgumentException() {
 
         // Given / Arrange
-        IPersonService service = new PersonService();
         person.setEmail(null);
 
-        // When / Act
+        var expectedMessage = "The Person email is null or empty!";
 
-        // Then / Assert
-        assertThrows(IllegalArgumentException.class, () -> service.createPerson(person),
+        // When & Then
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> service.createPerson(person),
                 () -> "Empty email should have caused an IllegalArgumentException"
         );
+        assertEquals(expectedMessage, exception.getMessage(),
+                () -> "Exception error message is incorrect!");
     }
 }
