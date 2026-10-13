@@ -1,5 +1,7 @@
 package br.com.yago;
 
+import br.com.yago.service.IPersonService;
+import br.com.yago.service.PersonService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +12,8 @@ public class PersonServiceTest {
      void testCreatePerson_When_Success_ShouldReturnPersonObject() {
 
         // Given / Arrange
-        
+        IPersonService service = new PersonService();
+
         // When / Act
         
         // Then / Assert
