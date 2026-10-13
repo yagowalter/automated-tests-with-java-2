@@ -16,11 +16,11 @@ public class PersonServiceTest {
     @BeforeEach
     void setup() {
         person = new Person(
-                "Keith",
                 "Moon",
-                "Kmoon@email.com.br",
+                "Keith",
                 "Wembley - UK",
-                "Male"
+                "Male",
+                "Kmoon@email.com.br"
         );
     }
 
@@ -39,9 +39,9 @@ public class PersonServiceTest {
     }
 
 
-    @DisplayName("When Create a Person witch Success should contains FirstName in Returned a Person Object")
+    @DisplayName("When Create a Person witch Success should contains Valid Fields in Returned a Person Object")
     @Test
-    void testCreatePerson_When_Success_ShouldContainsFirstNameInReturnedPersonObject() {
+    void testCreatePerson_When_Success_ShouldContainsValidFieldsInReturnedPersonObject() {
 
         // Given / Arrange
         IPersonService service = new PersonService();
@@ -50,6 +50,10 @@ public class PersonServiceTest {
         Person actual = service.createPerson(person);
 
         // Then / Assert
-        assertEquals(person.getFirstName(), actual.getFirstName(), () -> "The FirstName is different!");
+        assertEquals(person.getFirstName(), actual.getFirstName(), () -> "The FirstName is Incorrect!");
+        assertEquals(person.getAddress(), actual.getAddress(), () -> "The address is Incorrect!");
+        assertEquals(person.getGender(), actual.getGender(), () -> "The gender is Incorrect!");
+        assertEquals(person.getLastName(), actual.getLastName(), () -> "The lastName is Incorrect!");
+        assertEquals(person.getEmail(), actual.getEmail(), () -> "The email is Incorrect!");
     }
 }
